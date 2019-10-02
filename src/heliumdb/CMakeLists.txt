@@ -4,7 +4,7 @@ set (SOURCES
      iter.cpp
     )
 
-add_library (heliumdb SHARED ${SOURCES})
+Python_add_library (heliumdb MODULE ${SOURCES})
 target_link_libraries(heliumdb ${LIBHE})
 set_target_properties (heliumdb PROPERTIES PREFIX "")
 set_target_properties (heliumdb PROPERTIES SUFFIX ".so")

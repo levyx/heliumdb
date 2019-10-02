@@ -4,7 +4,8 @@ project(heliumdb CXX)
 # compile options
 option(DEBUG "Enable debug build" OFF)
 option(TESTS "Enable unittests" OFF)
-set(PYTHON_CONFIG "python3-config" CACHE STRING "python-config executable build with")
+
+find_package(Python COMPONENTS Development)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "default install path" FORCE )
@@ -22,33 +23,6 @@ endif (DEBUG)
 # allow external projects
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 include(${CMAKE_ROOT}/Modules/CheckIncludeFileCXX.cmake)
-
-execute_process(
-    COMMAND bash -c "${PYTHON_CONFIG} --includes"
-    OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
-    RESULT_VARIABLE RET
-    )
-
-if(NOT ${RET} EQUAL "0")
-    message(FATAL_ERROR "failed to run python-config")
-endif()
-
-execute_process(
-    COMMAND bash -c "${PYTHON_CONFIG} --ldflags"
-    OUTPUT_VARIABLE PYTHON_LDFLAGS
-    RESULT_VARIABLE RET
-    )
-
-if(NOT ${RET} EQUAL "0")
-    message(FATAL_ERROR "failed to run python-config")
-endif()
-
-string(STRIP "${PYTHON_LDFLAGS}" PYTHON_LDFLAGS)
-string(REGEX REPLACE "\n$" "" PYTHON_LDFLAGS "${PYTHON_LDFLAGS}")
-string(REGEX REPLACE "\n$" "" PYTHON_INCLUDE_PATH "${PYTHON_INCLUDE_PATH}")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PYTHON_INCLUDE_PATH}")
-link_libraries(${PYTHON_LDFLAGS})
 
 set(INCLUDE_PATHS
     ${PROJECT_SOURCE_DIR}/src/heliumdb/
