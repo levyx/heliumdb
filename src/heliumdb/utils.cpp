@@ -3,6 +3,8 @@
 #include <string>
 #include "bytesobject.h"
 
+#define __thread __declspec(thread)
+
 static PyObject* PICKLE_MODULE = NULL;
 static PyObject* method_dumps_name = NULL;
 static PyObject* method_loads_name = NULL;
