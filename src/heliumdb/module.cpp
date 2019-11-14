@@ -277,7 +277,7 @@ heliumdb_del (heliumdbPy* self, PyObject *args)
     PyObject *failobj = Py_None;
     PyObject *pickleObj = NULL;
 
-    char* buffer[8096] = {0};
+    char buffer[8096] = {0};
     size_t rdSize = sizeof (buffer);
     void* buf = NULL;
 
@@ -413,7 +413,7 @@ heliumdb_ass_sub (heliumdbPy* self, PyObject* k, PyObject* v)
 PyObject*
 heliumdb_subscript (heliumdbPy* self, PyObject* k)
 {
-    char*   buffer[8096] = {0};
+    char   buffer[8096] = {0};
     size_t  rdSize = sizeof (buffer);
     void*   buf = NULL;
     PyObject *pickleObj;
